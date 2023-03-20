@@ -55,7 +55,7 @@ def main_page():
         choose2 = option_menu("Menu", ["Data overview", "TF activity analysis"],
                             icons=['clipboard-data',
                                     'lightning-charge', ],
-                            menu_icon="arrow-return-right", default_index=default_value,
+                            menu_icon="app-indicator", default_index=default_value,
                             styles={
             "container": {"padding": "5!important", "background-color": "#fafafa"},
             "icon": {"color": "orange", "font-size": "18px"},
