@@ -7,7 +7,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 from utils import convert_df_to_csv, img2buf, load_data, violin_plot
-from register_load_widget_state import  persist
+# from register_load_widget_state import  persist
 
 ordered_celltypes = [ "LT-HSC.HLF","HSC.HIST1H2AC","HSC.WNT11","HSC.CACNB2","HSC.MYADM-CD97","ST-HSC.PBX1","LMPP.CDK6-FLT3","MPP.SPINK2-CD99","MPP.Ribo-high","pre-MEP","MEP-MKP","ERP","BMCP","ML-Gran","MultiLin-ATAC","pre-Gran.CP","LMPP.PRSSI","LMPP.LSAMP","LMPP.Naive.T-cell"]
 
@@ -85,11 +85,11 @@ def TF_page(path_data):
         # violin plot for selected TFs]]    
         # defaults = st.session_state['1_tf'] if "1_tf" in st.session_state and set(st.session_state['1_tf']).issubset(set(tfall)) and len(set(st.session_state['1_tf']))>0 else [tfall[0]]
     
-        if "tfpage_tab1_tf" in st.session_state:
-            if not set(st.session_state.tfpage_tab1_tf).issubset(set(tfall)): 
-                 st.session_state.tfpage_tab1_tf = list(set(st.session_state.tfpage_tab1_tf) & set(tfall))
+        # if "tfpage_tab1_tf" in st.session_state:
+        #     if not set(st.session_state.tfpage_tab1_tf).issubset(set(tfall)): 
+        #          st.session_state.tfpage_tab1_tf = list(set(st.session_state.tfpage_tab1_tf) & set(tfall))
 
-        TFs_selected = st.multiselect('TFs', tfall,  default=tfall[0], key=persist("tfpage_tab1_tf"))
+        TFs_selected = st.multiselect('TFs', tfall,  default=tfall[0] ) #, key=persist("tfpage_tab1_tf"))
         for tf in TFs_selected:
             df_ranks = df_ranks_all.loc[:, [tf, "Celltype"]]
 
@@ -125,7 +125,7 @@ def TF_page(path_data):
 
         st.info('For each cell type, get the mean expression of every TF. The table is sorted by the TF expression value. The bigger the value, the higher the rank.')
        
-        s_celltype = st.selectbox(f'Cell types ({len(celltypeAll)})', celltypeAll,  key=persist("tfpage_tab2_type"),
+        s_celltype = st.selectbox(f'Cell types ({len(celltypeAll)})', celltypeAll , # ,  key=persist("tfpage_tab2_type"),
                                   format_func=lambda x: x + " (Num of TFs: " + str(celltype_TFcount[x])+ ")")
         
         df_data = celltype_TFmean[s_celltype].round(2).to_frame()
@@ -145,7 +145,7 @@ def TF_page(path_data):
         )
         
         
-        datafile_out = f"TFexpression_of_{s_celltype}.csv"
+        datafile_out = f"TF_mean_expression_of_{s_celltype}.csv"
         
         cb = c2.download_button(
             label='📩 '+"Download Data",

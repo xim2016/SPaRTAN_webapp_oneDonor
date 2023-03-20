@@ -10,6 +10,26 @@ from TF_page import TF_page
 from pathlib import Path
 Image.MAX_IMAGE_PIXELS = None
 
+max_width_str = f"max-width: 75%;"
+st.markdown(f"""
+            <style> 
+            
+            .appview-container .main .block-container{{{max_width_str}}}
+            </style>    
+            """,
+            unsafe_allow_html=True,
+            )
+
+
+page_style = """
+        <style>
+        #MainMenu {visibility: hidden;}  
+        footer  {visibility: hidden;}  
+        div.css-1vq4p4l.e1fqkh3o4{padding: 2rem 1rem 1.5rem;}
+        div.block-container{padding-top:3rem;}
+        </style>
+        """
+st.markdown(page_style, unsafe_allow_html=True )
 
 
 mainTitle2idx = {"Data overview": 0,
@@ -19,19 +39,20 @@ mainTitle2idx = {"Data overview": 0,
 
 
 
-def main_page(orisetting, cleanedsetting):
+# def main_page(orisetting, cleanedsetting):
+def main_page():
 
     pages = {
         "Data overview": data_page,
-        "TF activity analysis": TF_page,
+        "TF activity analysis": TF_page
     }
 
-    path_data = Path(f"./data/{cleanedsetting}") 
+    path_data = Path(f"./data/TFexpressedFALSE_CLR1") 
     # st.write(str(path_data))
     with st.sidebar:
         default_value = st.session_state["main"] if "main" in st.session_state else 0
         # print( "main" in st.session_state)
-        choose2 = option_menu(orisetting, ["Data overview", "TF activity analysis"],
+        choose2 = option_menu("Menu", ["Data overview", "TF activity analysis"],
                             icons=['clipboard-data',
                                     'lightning-charge', ],
                             menu_icon="arrow-return-right", default_index=default_value,
@@ -58,6 +79,8 @@ def main_page(orisetting, cleanedsetting):
 
     pages[choose2](path_data)
    
-    value = mainTitle2idx[choose2]
-    st.session_state["main"] = value
+    # value = mainTitle2idx[choose2]
+    # st.session_state["main"] = value
     
+    
+main_page()

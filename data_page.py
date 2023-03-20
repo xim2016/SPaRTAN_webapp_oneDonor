@@ -26,7 +26,7 @@ def data_page(path_data):
     
     spartan_data.rename(columns={"RNA.rate": "RNA rate", "Protein.rate": "Protein rate"}, inplace=True)
 
-    selected = option_menu(None, ["Overview",  "SPaRTAN data"],
+    selected = option_menu(None, ["Data info",  "SPaRTAN data"],
                            icons=["clipboard", "clipboard-plus"],
                            menu_icon="cast", default_index=0, orientation="horizontal",
                            styles={
@@ -37,7 +37,7 @@ def data_page(path_data):
         # "separator":"."
     })
 
-    if selected == "Overview":
+    if selected == "Data info":
 
     
         hide_table_index()
@@ -56,9 +56,9 @@ def data_page(path_data):
         c.table(cell_count)
 
     elif selected == "SPaRTAN data":
-        # st.info("SPaRTAN moodule was trained on dataset per donor per cell type. We selected genes by intersecting genes in TF-target gene prior matrix and filtered the genes that have to be expressed in 30\% cells in all donors in a single cell type. Not every cell type has cells(or enough cells) for every donor to run SPaRTAN module. We specify each module dataset has minimal 50 cells")
+        st.info("We combined the data by cell-type and trained the SPaRTAN model for each cell-type. The genes and proteins expressed less than 3\% cells were filtered out in each cell-type. Cell-types which have less than 50 cells were not used. \"protein exluded\" field in the following table does not count 5 isotype/lsotype controls (Mouse(IgG1-kisotype), Mouse(IgG2a-kisotype), Mouse(IgG2b-kisotype), Mouse(IgM-kIsotype), Rat(IgG2a-kIsotype).")
 
-        st.dataframe(spartan_data.style.format(
-            {'RNArate': '{:.2f}', 'Number of genes': '{:.0f}', 'Number of TFs': '{:.0f}', 'Number of proteins': '{:.0f}',  'RNA rate': '{:.2f}',  'Protein rate': '{:.2f}' }), use_container_width=True)
+        st.table(spartan_data.style.format(
+            {'RNArate': '{:.2f}', 'Number of genes': '{:.0f}', 'Number of TFs': '{:.0f}', 'Number of proteins': '{:.0f}',  'RNA rate': '{:.2f}',  'Protein rate': '{:.2f}' }))
         # from st_aggrid import AgGrid
         # AgGrid(spartan_data, height=500, fit_columns_on_grid_load=True)
