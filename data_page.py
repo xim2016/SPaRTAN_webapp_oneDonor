@@ -56,7 +56,7 @@ def data_page(path_data):
         c.table(cell_count)
 
     elif selected == "SPaRTAN data":
-        st.info("We combined the data by cell-type and trained the SPaRTAN model for each cell-type. The genes and proteins expressed less than 3\% cells were filtered out in each cell-type. Cell-types which have less than 50 cells were not used. \"protein exluded\" field in the following table does not count 5 isotype/lsotype controls (Mouse(IgG1-kisotype), Mouse(IgG2a-kisotype), Mouse(IgG2b-kisotype), Mouse(IgM-kIsotype), Rat(IgG2a-kIsotype).")
+        st.info("We combined the data by cell-type and trained the SPaRTAN model for each cell-type. The genes and proteins expressed in less than 3\% cells were filtered out in each cell-type. Cell-types which have less than 50 cells were not used. \"protein excluded\" field in the following table does not count 5 isotype controls (Mouse(IgG1-kisotype), Mouse(IgG2a-kisotype), Mouse(IgG2b-kisotype), Mouse(IgM-kIsotype), Rat(IgG2a-kIsotype).")
 
         st.table(spartan_data.style.format(
             {'RNArate': '{:.2f}', 'Number of genes': '{:.0f}', 'Number of TFs': '{:.0f}', 'Number of proteins': '{:.0f}',  'RNA rate': '{:.2f}',  'Protein rate': '{:.2f}' }))
